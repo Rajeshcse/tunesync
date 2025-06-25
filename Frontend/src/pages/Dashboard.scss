@@ -1,0 +1,55 @@
+// src/pages/Dashboard.scss
+@use "../styles/variables" as *;
+
+.dashboard-container {
+  padding: 40px 24px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, $primary 0%, $secondary 100%);
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+}
+
+.dashboard-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+.user-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  padding: 0 1rem;
+}
+
+.user-card {
+  background: $glass-bg;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid $glass-border;
+  box-shadow: $shadow;
+  border-radius: 16px;
+  padding: 20px;
+  text-align: left;
+  color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  p {
+    margin: 0.4rem 0;
+    font-weight: 500;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  &:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 10px 30px rgba(252, 92, 125, 0.25);
+  }
+}
+
+.no-users {
+  font-size: 1.2rem;
+  margin-top: 2rem;
+  color: #f0eaea;
+}

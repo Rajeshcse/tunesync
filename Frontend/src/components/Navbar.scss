@@ -1,0 +1,46 @@
+@use "../styles/variables" as *;
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background: $navbar-gradient;
+  box-shadow: $shadow;
+  border-bottom: 2px solid $glass-border;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.logo a {
+  font-size: 26px;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 12px rgba(31, 38, 135, 0.25), 0 1px 8px #fc5c7d44;
+}
+
+.nav-links a,
+.nav-links button {
+  margin-left: 20px;
+  font-size: 16px;
+  color: #fff;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: color 0.2s, text-shadow 0.2s;
+  text-shadow: 0 2px 8px rgba(31, 38, 135, 0.18), 0 1px 8px #fc5c7d33;
+}
+
+.nav-links a:hover,
+.nav-links button:hover {
+  color: #ffe082;
+  text-decoration: underline;
+  text-shadow: 0 2px 16px #fc5c7d88, 0 1px 8px #6a82fb55;
+}

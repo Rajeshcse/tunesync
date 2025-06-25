@@ -1,0 +1,12 @@
+$primary: #6a82fb;
+$secondary: #fc5c7d;
+$navbar-gradient: linear-gradient(
+  90deg,
+  rgba(106, 130, 251, 0.92) 0%,
+  rgba(252, 92, 125, 0.92) 100%
+);
+$glass-bg: rgba(255, 255, 255, 0.25);
+$glass-border: rgba(255, 255, 255, 0.18);
+$shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+$button-gradient: linear-gradient(90deg, #6a82fb 0%, #fc5c7d 100%);
+$button-hover: linear-gradient(90deg, #fc5c7d 0%, #6a82fb 100%);

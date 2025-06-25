@@ -1,0 +1,119 @@
+@use "../styles/variables" as *;
+
+.hero-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  text-align: center;
+  background: linear-gradient(135deg, $primary 0%, $secondary 100%);
+  font-family: "Poppins", "Montserrat", Arial, sans-serif;
+}
+
+.hero-header {
+  background: $glass-bg;
+  box-shadow: $shadow;
+  border-radius: 24px;
+  border: 1px solid $glass-border;
+  padding: 3rem 2rem 2.5rem 2rem;
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+  max-width: 420px;
+  width: 100%;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: fadeIn 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.hero-header h1 {
+  font-size: 2.7rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  color: #222;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 8px rgba(106, 130, 251, 0.12);
+}
+
+.hero-header .tagline {
+  font-size: 1.25rem;
+  color: #444;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.hero-image {
+  max-width: 220px;
+  width: 100%;
+  height: auto;
+  margin: 2rem auto 1.5rem auto;
+  display: block;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25), 0 1.5px 8px 0 #fc5c7d33;
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  &:hover {
+    transform: scale(1.04) rotate(-2deg);
+  }
+}
+
+.cta-button {
+  background: $button-gradient;
+  color: white;
+  padding: 16px 40px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px 0 rgba(252, 92, 125, 0.15);
+  transition: background 0.3s, transform 0.2s;
+  border: none;
+  outline: none;
+  margin-top: 1.2rem;
+  display: inline-block;
+  letter-spacing: 0.5px;
+  &:hover {
+    background: $button-hover;
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 8px 32px 0 rgba(252, 92, 125, 0.18);
+  }
+}
+
+.hero-footer {
+  margin-top: 40px;
+  color: #fff;
+  font-size: 0.98rem;
+  text-shadow: 0 1px 8px rgba(31, 38, 135, 0.18);
+  opacity: 0.85;
+}
+
+// Animations
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive
+@media (max-width: 600px) {
+  .hero-header {
+    padding: 2rem 0.7rem 2rem 0.7rem;
+    margin-top: 2rem;
+    max-width: 98vw;
+  }
+  .hero-header h1 {
+    font-size: 2rem;
+  }
+  .hero-image {
+    max-width: 140px;
+  }
+  .cta-button {
+    padding: 12px 24px;
+    font-size: 1rem;
+  }
+}
