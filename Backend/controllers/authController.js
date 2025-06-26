@@ -52,49 +52,67 @@ export const registerUser = async (req, res) => {
   }
 };
 
-//   Login user and return JWT token
+//   Login user and return JWT Access and refresh token
+const createAccessToken = (user) => {
+  return jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+    expiresIn: "15m",
+  });
+};
+
+const createRefreshToken = (user) => {
+  return jwt.sign({ userId: user._id }, process.env.REFRESH_TOKEN_SECRET, {
+    expiresIn: "7d",
+  });
+};
 
 export const loginUser = async (req, res) => {
   if (handleValidationErrors(req, res)) return;
-
   const { email, password } = req.body;
-
   try {
     const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(400).json({ message: "User does not exist" });
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      return res.status(401).json({ message: "Invalid credentials" });
     }
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ message: "Invalid password" });
-    }
-
-    const token = jwt.sign(
-      {
-        user_id: user._id,
-        username: user.username,
-      },
-      JWT_SECRET,
-      { expiresIn: "1h" }
-    );
+    const accessToken = createAccessToken(user);
+    const refreshToken = createRefreshToken(user);
+    // Set refresh token as HttpOnly cookie
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // ⛑ Only HTTPS in production
+      sameSite: "Strict",
+      path: "/api/auth/refresh-token",
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+    });
 
     res.status(200).json({
       message: "Login successful",
-      token,
+      token: accessToken,
       user: { username: user.username, email: user.email },
     });
   } catch (error) {
-    res.status(500).json({ message: "Login failed", error: error.message });
+    res.status(500).json({ message: "Login failed. Please try again later." });
+  }
+};
+
+export const refreshAccessToken = async (req, res) => {
+  const token = req.cookies.refreshToken;
+  if (!token) return res.status(401).json({ message: "No refresh token" });
+  try {
+    const payload = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
+    const newAccessToken = createAccessToken({ _id: payload.userId });
+    res.json({ token: newAccessToken });
+  } catch (err) {
+    res.status(403).json({ message: "Invalid or expired refresh token" });
   }
 };
 
 // Get current user's profile
 export const userProfile = async (req, res) => {
   try {
-    const currentUserDetail = await User.findById(req.user.user_id).select(
+    const currentUserDetail = await User.findById(req.user.userId).select(
       "-password -__v"
     );
+    console.log(currentUserDetail);
     if (!currentUserDetail) {
       return res.status(404).json({ message: "User not found" });
     }
